@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postman </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+        <link rel="stylesheet" href="prism.css">
+    <style>
+
+.nav-bar{
+            background-color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+
+            /* margin: 0 auto; */
+            border-radius: 5rem;
+        }
+
+        .nav-bar--link{
+            border-radius: 2rem;
+            padding: 0.5rem 1.25rem;
+            background-color: #2ab7ea10;
+            margin: 0 1rem;
+            text-decoration: none;
+            color: #084acb;
+            font-weight: 500;
+            box-shadow: 1px 1px 3px gray;
+            transition: box-shadow 0.3s ease-in;
+        }
+
+        .nav-bar--link:hover{
+            box-shadow: 0  0 7px 2px;
+
+        }
+
+        .nav-bar--link.is-active{
+            background-color: #084acb;
+            color: #fff;
+        }
+      
+
+        .nav-bar> .nav-bar--logo {
+            font-size: 39px;
+            font-weight: bolder;
+            font-family: sans-serif;
+            
+
+            background: -webkit-linear-gradient(200deg, #ee9617 0%, #fe5858 74%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .container>h1{
+            font-size: 39px;
+            font-weight: bolder;
+            font-family: sans-serif;
+            
+
+            background: -webkit-linear-gradient(200deg, #ee9617 10%, #ee6a6a 74%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+        }
+        .btn{
+            background:linear-gradient(to right,  #ee9617 , #fe5858 );
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .btn:hover{
+            transform: scale(1.1);
+        }
+        .row>legend, label{
+            color: #f3ae86;
+            font-weight: 600;
+        }
+       #requestJsonBox>#responsePre{
+           max-height: 1000px;
+           
+       }
+
+
+
+
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="nav-bar">
+        <a href="#" class="nav-bar--logo">Postman</a>
+        <a href="#" class="nav-bar--link">Home</a>
+        <a href="#" class="nav-bar--link">About</a>
+    </nav>
+    <div class="container">
+        <h1 class="my-3 welcome">GET & POST your requests.</h1>
+        
+        <hr size="5px" style="color: orange;">
+        
+
+        <div class="form-group row my-4">
+            <label for="url" class="col-sm-2 col-form-label">URL</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="url" placeholder="Enter URL here">
+            </div>
+        </div>
+
+        <!-- REQUEST TYPE -->
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Request Type</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="requestType" id="get" value="GET" checked>
+                        <label class="form-check-label" for="get">
+                            GET
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="requestType" id="post" value="POST">
+                        <label class="form-check-label" for="post">
+                            POST
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </fieldset>
+
+
+
+
+        <!-- CONTENT TYPE -->
+        <fieldset class="form-group my-4">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Content Type</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="contentType" id="jsonRadio" value="json"
+                            checked>
+                        <label class="form-check-label" for="json">
+                            JSON
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="contentType" id="paramsRadio" value="params">
+                        <label class="form-check-label" for="params">
+                            Custom Parameters
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Parameters Box -->
+        <div id="parametersBox">
+            <div class="form-row">
+                <label for="url" class="col-sm-2 col-form-label">Parameter 1</label>
+                <div class="row-md-4">
+                    <input type="text" class="form-control" id="parameterKey1" placeholder="Enter Parameter 1 Key">
+                </div>
+                <div class="row-md-4">
+                    <input type="text" class="form-control" id="parameterValue1" placeholder="Enter Parameter 1 Value">
+                </div>
+                <button id="addParam" class="btn btn-primary my-3">+</button>
+
+            </div>
+            <div id="params"></div>
+            
+        </div>
+
+       
+
+
+        <!-- JSON Box -->
+        <div class="my-3" id="requestJsonBox">
+            <div class="form-group row">
+                <label for="requestJsonText" class="col-sm-2 col-form-label">Enter Request Json</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="requestJsonText" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+
+         <!-- Submit button which will trigger fetch api -->
+         <div class="form-group row my-4 " >
+            <div class="col-sm-10">
+                <button id="submit" class="btn btn-primary">Submit</button>
+
+            
+            </div>
+        </div>
+        <br>
+
+        <!-- Response that the app fetches -->
+        <h1 class="reponse" style="text-align: center; font-size: 3rem;">Response</h1>
+        <div class="my-4" id="requestJsonBox">
+            <div class="form-group row" style="display: flex; justify-content: center; align-items: center;">
+               
+                <div class="col-sm-10" >
+                    <!-- <textarea class="form-control" id="requestJsonText" rows="3">Your response will appear here.</textarea> -->
+
+                    <pre id='responsePre' class="language-javascript"> 
+                        <code id='responsePrism' class="language-javascript" style="text-align: center;"> Your response will appear here 
+
+                        </code> 
+                    </pre>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+    crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+    integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
+    crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+    integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+    crossorigin="anonymous"></script>
+<script src="index.js"></script>
+<script src="prism.js"></script>
+
+</html>
